@@ -1,11 +1,11 @@
 public class InputNeuron extends Neuron{
 
-    public InputNeuron() {
-       super();
+    public InputNeuron(double initialVal) {
+       super(initialVal);
     }
 
     public void start() {
-        this.sendSignal(1, this.lecherIdMaps.values());
+        this.receiveSignal(1);
     }
 
 

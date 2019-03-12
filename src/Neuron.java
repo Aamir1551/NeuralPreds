@@ -10,13 +10,15 @@ public class Neuron {
     protected HashMap<Integer, Neuron> lecherIdMaps = new HashMap<>(); //these neurons are the ones that will be fed
     protected HashMap<Integer, Neuron> feederIdMaps = new HashMap<>(); //these neurons are the ones that will be feeding
     protected HashMap<Integer, Double> weights = new HashMap<>();
-
+    private double initialVal = 0;
 
 
     protected double feederCount = 0;
     protected double value = 0;
 
-    public Neuron() {
+    public Neuron(double initialVal) {
+        this.initialVal = initialVal;
+        this.value = initialVal;
         this.id = numberOfNeurons;
         numberOfNeurons++;
 
@@ -36,7 +38,9 @@ public class Neuron {
 
         }
 
-        this.sendSignal(1, lecherIdMaps.values());
+        if(this.lecherIdMaps.size() != 0) {
+            this.sendSignal(1, lecherIdMaps.values());
+        }
 
     }
 
@@ -47,7 +51,7 @@ public class Neuron {
     }
 
     public void reset() {
-        this.value = 0;
+        this.value = this.initialVal;
     }
 
     protected void sendSignal(Integer s, Collection<Neuron> neurons) {
@@ -57,13 +61,17 @@ public class Neuron {
 
     }
 
-    private void receiveSignal(Integer s) {
+    protected void receiveSignal(Integer s) {
         if(s == 1) {
              if(feederCount == this.feederIdMaps.size()) {
                 this.feedAll();
              }
         }
 
+    }
+
+    public double getValue() {
+        return this.value;
     }
 
 
